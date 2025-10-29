@@ -45,9 +45,10 @@ naming:
   # These will be standardized in filenames
   company_shortcuts:
     "IC": "ic"
-    "InterChapter": "ic"
-    "Nike": "nike"
-    "Vans": "vans"
+    "Inner Chapter": "ic"
+    "ACME Corp": "acme"
+    "TechStart": "techstart"
+    "GlobalBrand": "globalbrand"
 
 # File Processing Configuration
 processing:
