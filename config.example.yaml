@@ -1,0 +1,185 @@
+# File Renamer Configuration
+
+# LM Studio API Configuration
+lm_studio:
+  # Base URL for LM Studio API (default local instance)
+  base_url: "http://localhost:1234/v1"
+
+  # Model for text analysis (documents)
+  # Recommended: qwen2.5-7b-instruct, llama-3.2-3b-instruct, phi-3-mini-4k-instruct
+  text_model: "qwen2.5-7b-instruct"
+
+  # Model for vision analysis (images, videos)
+  # Recommended: mlx-community/SmolVLM-500M-Instruct-4bit
+  vision_model: "mlx-community/SmolVLM-500M-Instruct-4bit"
+
+  # Generation parameters
+  temperature: 0.3        # Lower = more deterministic (0.0-1.0)
+  max_tokens: 150         # Maximum tokens in response
+  top_p: 0.9              # Nucleus sampling
+
+  # Timeout settings
+  timeout: 30             # API timeout in seconds
+
+# Naming Configuration
+naming:
+  # Case style for filenames
+  # Options: kebab (recommended), snake, camel, pascal, lower
+  case_style: "kebab"
+
+  # Date format in filename
+  # Options: yyyymmdd, yyyy-mm-dd, yymmdd, ddmmyyyy
+  date_format: "yyyymmdd"
+
+  # Position of date in filename
+  # Options: end (recommended), start, none
+  date_position: "end"
+
+  # Maximum filename length (excluding extension)
+  max_length: 100
+
+  # Preserve original date if found in filename
+  preserve_existing_date: true
+
+  # Company/organization shortcuts
+  # These will be standardized in filenames
+  company_shortcuts:
+    "IC": "ic"
+    "InterChapter": "ic"
+    "Nike": "nike"
+    "Vans": "vans"
+
+# File Processing Configuration
+processing:
+  # Skip files that already follow the naming convention
+  skip_already_formatted: true
+
+  # Create backup of original filename
+  create_backup: true
+
+  # Backup directory (relative to processed file location)
+  backup_dir: ".file-renamer-backups"
+
+  # Dry run mode (show changes without renaming)
+  dry_run: false
+
+  # Process subdirectories recursively
+  recursive: false
+
+  # Skip hidden files (starting with .)
+  skip_hidden: true
+
+  # Maximum file size to process (in MB, 0 = no limit)
+  max_file_size_mb: 100
+
+# File Types Configuration
+file_types:
+  # Document types to process
+  documents:
+    - ".pdf"
+    - ".docx"
+    - ".doc"
+    - ".pptx"
+    - ".ppt"
+    - ".xlsx"
+    - ".xls"
+    - ".txt"
+    - ".rtf"
+    - ".odt"
+    - ".ods"
+
+  # Image types to process (requires vision model)
+  images:
+    - ".jpg"
+    - ".jpeg"
+    - ".png"
+    - ".gif"
+    - ".webp"
+    - ".heic"
+    - ".bmp"
+    - ".tiff"
+
+  # Video types to process (requires vision model)
+  videos:
+    - ".mp4"
+    - ".mov"
+    - ".avi"
+    - ".mkv"
+    - ".webm"
+
+# Content Extraction Settings
+extraction:
+  # For documents: maximum characters to extract for analysis
+  max_text_length: 2000
+
+  # For PDFs: maximum pages to extract
+  max_pdf_pages: 5
+
+  # For images: resize for faster processing
+  image_max_dimension: 1024
+
+  # For videos: number of frames to extract and analyze
+  video_frame_count: 3
+
+# Prompt Configuration
+prompts:
+  # Instruction for text-based filename generation
+  text_instruction: |
+    Analyze this document content and extract key information for a filename.
+
+    Extract:
+    - Company/organization name (if mentioned)
+    - Brand or client name (if applicable)
+    - Project name or main topic
+    - Document type (e.g., report, proposal, screener, brief, analysis)
+
+    Rules:
+    - Keep names short and meaningful
+    - Use common abbreviations where appropriate
+    - Focus on the most important/distinctive information
+    - Omit generic words like "the", "a", "an"
+
+    Respond in JSON format only:
+    {
+      "company": "company-name or null",
+      "brand": "brand-name or null",
+      "project": "project-name",
+      "type": "document-type"
+    }
+
+  # Instruction for vision-based filename generation
+  vision_instruction: |
+    Analyze this image and describe what you see in a way suitable for a filename.
+
+    Extract:
+    - Main subject or topic
+    - Brand names or logos visible
+    - Type of content (photo, screenshot, diagram, etc.)
+    - Key distinctive features
+
+    Rules:
+    - Be concise but descriptive
+    - Focus on the most prominent elements
+    - Use common terms
+
+    Respond in JSON format only:
+    {
+      "subject": "main-subject",
+      "brand": "brand-name or null",
+      "type": "content-type",
+      "description": "brief-description"
+    }
+
+# Logging Configuration
+logging:
+  # Log level: DEBUG, INFO, WARNING, ERROR
+  level: "INFO"
+
+  # Log file location (null = no file logging)
+  file: "file-renamer.log"
+
+  # Show progress bars
+  show_progress: true
+
+  # Verbose output
+  verbose: false
