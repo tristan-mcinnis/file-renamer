@@ -63,8 +63,8 @@ company-brand-project-type-yyyymmdd.extension
 ### Examples
 
 ```
-Before: IC x Vans - Consumer Immersion - Screener 20251028.docx
-After:  vans-consumer-immersion-screener-20251028.docx
+Before: IC - Consumer Immersion - Screener 20251028.docx
+After:  ic-consumer-immersion-screener-20251028.docx
 
 Before: Nike Basketball Report Q4 2024.pdf
 After:  nike-basketball-report-20241231.pdf
